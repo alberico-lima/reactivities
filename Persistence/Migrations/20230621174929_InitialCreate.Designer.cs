@@ -31,16 +31,16 @@ namespace Persistence.Migrations
                     b.Property<string>("City")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Descriptiom")
+                    b.Property<string>("Descriptio")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Venue")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("date")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("title")
+                    b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

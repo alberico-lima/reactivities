@@ -28,7 +28,8 @@ export default function ActivityDashBoard({activities,selectedActivity,selectAct
                 <ActivityList 
                     activities={activities} 
                     selectActivity={selectActivity}
-                    deleteActivity={deleteActivity}                
+                    deleteActivity={deleteActivity} 
+                    submitting={submitting}               
                 />
             </Grid.Column>
             <Grid.Column width='6'>

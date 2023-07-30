@@ -9,9 +9,10 @@ import LoadingComponent from './LoadingComponent';
 
 function App() {
   const [activities, setActivities] = useState<Activity []>([]);
-  const [selectedActivity, setSelectActivities] = useState<Activity |undefined>(undefined);
+  const [selectedActivity, setSelectedActivities] = useState<Activity |undefined>(undefined);
   const [editMode, setEditMode] =  useState(false);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     agent.Activities.list()
@@ -30,11 +31,11 @@ function App() {
   },[])
 
   function handleselectActivity(id : string){
-    setSelectActivities(activities.find( x => x.id === id))
+    setSelectedActivities(activities.find( x => x.id === id))
   }
 
   function handleCancelSelectActivities(){
-    setSelectActivities(undefined);
+    setSelectedActivities(undefined);
   }
 
   function handleFormOpen(id? : string)
@@ -48,11 +49,29 @@ function App() {
   }
 
   function handleCreateOrEditActivity (activity: Activity) {
-    activity.id
-    ? setActivities([...activities.filter(x => x.id !== activity.id),activity] )
-    : setActivities([...activities,{...activity, id: uuid()}]);
-    setEditMode(false);
-    setSelectActivities(activity);
+    setSubmitting(true);
+    if (activity.id) {
+      agent.Activities.update(activity).then (() => {
+        setActivities([...activities.filter(x => x.id !== activity.id),activity])
+        setEditMode(false);
+        setSubmitting(false);
+
+      })
+    }else{
+      activity.id = uuid();
+      agent.Activities.create(activity).then(() => {
+        setActivities([...activities, activity])
+        setEditMode(false);
+        setSubmitting(false);        
+      })
+    }
+
+    // activity.id
+    // ? setActivities([...activities.filter(x => x.id !== activity.id),activity] )
+    // : setActivities([...activities,{...activity, id: uuid()}]);
+    // setEditMode(false);
+    // setSelectedActivities(activity);
+
   }
 
   function handleDeleteActivity(id: string){
@@ -76,6 +95,7 @@ function App() {
               closeForm={handleFormClose}
               createOrEdit={handleCreateOrEditActivity}
               deleteActivity={handleDeleteActivity}
+              submitting={submitting}
             />
 
 

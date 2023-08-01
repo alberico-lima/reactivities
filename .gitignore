@@ -4,7 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 #SQLite files
-*.db*
+*.db-*
 *.db
 
 # User-specific files
@@ -479,3 +479,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+API/reactivities.db
+API/reactivities.db
+API/reactivities.db-shm
